@@ -1,0 +1,11 @@
+[package]
+name = "conversion_tools_main"
+version = "0.1.0"
+edition = "2021"
+author = "WinsomeQuill"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+serde_json = "1.0"
+conversion_tools_api = { path = "../conversion_tools_api" }
