@@ -46,8 +46,8 @@ checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 
 [[package]]
 name = "conversion_tools_api"
-version = "0.1.2"
-source = "git+https://github.com/WinsomeQuill/ConversionTools-Rust?branch=main#23d3b69ce7232e003094133fb4c5690a8659b01a"
+version = "0.1.3"
+source = "git+https://github.com/WinsomeQuill/ConversionTools-Rust?branch=main#63143cd549f44d7ca7c2d7a68dde1583081525f4"
 dependencies = [
  "reqwest",
  "serde_json",
@@ -55,7 +55,7 @@ dependencies = [
 
 [[package]]
 name = "conversion_tools_main"
-version = "0.1.2"
+version = "0.1.3"
 dependencies = [
  "conversion_tools_api",
  "serde_json",
