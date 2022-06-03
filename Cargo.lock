@@ -22,9 +22,9 @@ checksum = "bef38d45163c2f1dde094a7dfd33ccf595c92905c8f8f4fdc18d06fb1037718a"
 
 [[package]]
 name = "bumpalo"
-version = "3.9.1"
+version = "3.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a4a45a46ab1f2412e53d3a0ade76ffad2025804294569aae387231a0cd6e0899"
+checksum = "37ccbd214614c6783386c1af30caf03192f17891059cecc394b4fb119e363de3"
 
 [[package]]
 name = "bytes"
@@ -60,8 +60,8 @@ dependencies = [
 
 [[package]]
 name = "conversion_tools_api"
-version = "0.1.6"
-source = "git+https://github.com/WinsomeQuill/ConversionTools-Rust#14faf799e25564989125f9db9e6e9cc8461f5f6f"
+version = "0.1.9"
+source = "git+https://github.com/WinsomeQuill/ConversionTools-Rust#900cfcd3ff8c9917a15db32772a698854722ef52"
 dependencies = [
  "chrono",
  "reqwest",
@@ -72,7 +72,7 @@ dependencies = [
 
 [[package]]
 name = "conversion_tools_example"
-version = "0.1.4"
+version = "0.1.5"
 dependencies = [
  "conversion_tools_api",
  "serde_json",
@@ -495,9 +495,9 @@ checksum = "ff011a302c396a5197692431fc1948019154afc178baf7d8e37367442a4601cf"
 
 [[package]]
 name = "openssl-sys"
-version = "0.9.73"
+version = "0.9.74"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9d5fd19fb3e0a8191c1e34935718976a3e70c112ab9a24af6d7cadccd9d90bc0"
+checksum = "835363342df5fba8354c5b453325b110ffd54044e588c539cf2f20a8014e4cb1"
 dependencies = [
  "autocfg",
  "cc",
@@ -703,9 +703,9 @@ dependencies = [
 
 [[package]]
 name = "syn"
-version = "1.0.95"
+version = "1.0.96"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fbaf6116ab8924f39d52792136fb74fd60a80194cf1b1c6ffa6453eef1c3f942"
+checksum = "0748dd251e24453cb8717f0354206b91557e4ec8703673a4b30208f2abaf1ebf"
 dependencies = [
  "proc-macro2",
  "quote",
