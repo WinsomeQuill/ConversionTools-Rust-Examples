@@ -1,11 +1,13 @@
 [package]
 name = "conversion_tools_example"
-version = "0.1.5"
+version = "0.1.6"
 edition = "2021"
 author = "WinsomeQuill"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+dotenv = "0.15"
 serde_json = "1.0"
+tokio = { version = "1", features = ["full"] }
 conversion_tools_api = { git = "https://github.com/WinsomeQuill/ConversionTools-Rust" }

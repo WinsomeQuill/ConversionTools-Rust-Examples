@@ -6,21 +6,31 @@
 use std::{collections::HashMap, thread, time};
 use conversion_tools_api::api::Api;
 
-const TOKEN: &str = "YOUR TOKEN";
-const URL: &str = "https://api.conversiontools.io/v1/"; //API URL
+use dotenv::dotenv;
 
-fn main() {
-    let object: Api = Api::new(TOKEN.to_string(), URL.to_string());
-    file_convert_example(&object, &"king_cat.jpg");
-    site_convert_example(&object, &"https://github.com/WinsomeQuill");
+#[tokio::main]
+async fn main() -> std::io::Result<()> {
+    dotenv().ok();
+
+    let token = std::env::var("TOKEN").expect("TOKEN is invalid!");
+    let url = std::env::var("URL").expect("URL is invalid!");
+
+    let api = Api::new(token, url).await;
+
+
+    file_convert_example(&api, "king_cat.jpg", String::from("king_cat.jpg")).await;
+    site_convert_example(&api, "https://github.com/WinsomeQuill").await;
+
+    Ok(())
 }
 
-fn file_convert_example(object: &Api, path: &str) {
-    let mut args: HashMap<&str, &str> = HashMap::new(); //create HashMap for arguments
+async fn file_convert_example(object: &Api, path: &str, file_name: String) {
+    let mut args: HashMap<&str, &str> = HashMap::with_capacity(1); //create HashMap for arguments
     args.insert("orientation", "Portrait"); //argument for convertor
 
     let upload_result = object
-        .upload_file(&path)
+        .upload_file(path, file_name)
+        .await
         .expect("Error when upload file!");
 
     if upload_result.result.is_none() {
@@ -29,7 +39,8 @@ fn file_convert_example(object: &Api, path: &str) {
 
     let file_id = upload_result.result.unwrap().file_id;
     let create_task_result = object
-        .create_task(&"convert.jpg_to_pdf", &file_id, &args)
+        .create_task("convert.jpg_to_pdf", &file_id, &args)
+        .await
         .expect("Error when create task!");
 
     if create_task_result.result.is_none() {
@@ -38,7 +49,8 @@ fn file_convert_example(object: &Api, path: &str) {
 
     let task_id = &create_task_result.result.unwrap().task_id;
     loop {
-        let get_task_result = object.get_task(&task_id)
+        let get_task_result = object.get_task(task_id)
+            .await
             .expect("Error when get task!");
 
         let task = match get_task_result.result {
@@ -50,7 +62,7 @@ fn file_convert_example(object: &Api, path: &str) {
             "SUCCESS" => {
                 println!("[File Convert] Downloading...");
                 let file_id = task.file_id.unwrap();
-                match object.download_file(&file_id, "result.pdf") {
+                match object.download_file(&file_id, "result.pdf").await {
                     Ok(_) => println!("[File Convert] Okay"),
                     Err(e) => panic!("[File Convert] {}", e),
                 };
@@ -68,14 +80,15 @@ fn file_convert_example(object: &Api, path: &str) {
     }
 }
 
-fn site_convert_example(object: &Api, site_url: &str) {
-    let mut hash: HashMap<&str, &str> = HashMap::new(); //create HashMap for arguments
-    hash.insert("url", &site_url); //argument for convertor
+async fn site_convert_example(object: &Api, site_url: &str) {
+    let mut hash: HashMap<&str, &str> = HashMap::with_capacity(3); //create HashMap for arguments
+    hash.insert("url", site_url); //argument for convertor
     hash.insert("images", "yes"); //argument for convertor
     hash.insert("javascript", "yes"); //argument for convertor
 
     let create_task_result = object
-        .create_task(&"convert.website_to_png", "", &hash)
+        .create_task("convert.website_to_png", "", &hash)
+        .await
         .expect("Error when create task!");
 
     if create_task_result.result.is_none() {
@@ -84,7 +97,8 @@ fn site_convert_example(object: &Api, site_url: &str) {
 
     let task_id = &create_task_result.result.unwrap().task_id;
     loop {
-        let get_task_result = object.get_task(&task_id)
+        let get_task_result = object.get_task(task_id)
+            .await
             .expect("Error when get task!");
 
         let task = match get_task_result.result {
@@ -96,7 +110,7 @@ fn site_convert_example(object: &Api, site_url: &str) {
             "SUCCESS" => {
                 println!("[Site Convert] Downloading...");
                 let file_id = task.file_id.unwrap();
-                match object.download_file(&file_id, "result_site.png") {
+                match object.download_file(&file_id, "result_site.png").await {
                     Ok(_) => println!("[Site Convert] Okay"),
                     Err(e) => panic!("[Site Convert] {}", e),
                 };
